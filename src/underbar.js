@@ -60,6 +60,11 @@
   // Note: _.each does not have a return value, but rather simply runs the
   // iterator function over each item in the input collection.
   _.each = function(collection, iterator) {
+    for (var item in collection) {
+      if (object.hasOwnProperty(item)) {
+
+      }
+    }
   };
 
   // Returns the index at which value can be found in the array, or -1 if value
@@ -91,6 +96,18 @@
 
   // Produce a duplicate-free version of the array.
   _.uniq = function(array, isSorted, iterator) {
+    if (iterator !== undefined) {
+      let seen = [];
+      let list = [];
+      for (let item in array) {
+        if(seen.includes(iterator(array[item])) === false){
+          seen.push(iterator(array[item]));
+          list.push(array[item]);
+        }
+      }
+      return list;
+    }
+    return Array.from(new Set(array));
   };
 
 
