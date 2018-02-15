@@ -191,6 +191,12 @@
   _.contains = function(collection, target) {
     // TIP: Many iteration problems can be most easily expressed in
     // terms of reduce(). Here's a freebie to demonstrate!
+    if (!Array.isArray(collection)){
+      for (let item in collection) {
+        if (collection[item] === target) return true;
+        else return false;
+      }
+    }
     return _.reduce(collection, function(wasFound, item) {
       if (wasFound) {
         return true;
@@ -202,13 +208,33 @@
 
   // Determine whether all of the elements match a truth test.
   _.every = function(collection, iterator) {
-    // TIP: Try re-using reduce() here.
+    let final = true;
+    if (iterator == undefined){
+      for ( let item of collection ) {
+        if ( item !== true ){
+          return false;
+        }
+      }
+      return true;
+    }
+    for (let item of collection) {
+      if (!iterator(item)) {
+        final = false;
+      }
+    }
+    return final;
   };
 
   // Determine whether any of the elements pass a truth test. If no iterator is
   // provided, provide a default one
   _.some = function(collection, iterator) {
     // TIP: There's a very clever way to re-use every() here.
+    for (var i = 0; i < collection.length; i++) {
+      if (_.every([collection[i]], iterator)) {
+        return true;
+      }
+    }
+    return false;
   };
 
 
